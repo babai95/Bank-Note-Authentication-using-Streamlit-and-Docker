@@ -7,7 +7,6 @@ import cv2
 from scipy.stats import kurtosis, skew
 import skimage.measure    
 
-
 pickle_in = open("classifier.pkl","rb")
 classifier=pickle.load(pickle_in)
 
