@@ -23,24 +23,30 @@ if __name__ == "__main__":
     </div>
     """
     st.markdown(html_temp,unsafe_allow_html=True)
-    our_image = ""
+    curtosis = 0;
+    skewness = 0;
+    variance = 0;
+    entropy = 0
+    
     image_file = st.file_uploader("Upload Image", type=['jpg', 'png', 'jpeg'])
     if image_file is not None:
         our_image = Image.open(image_file)
         st.text("Original Image")
         st.image(our_image)
-    # gray_img = cv2.imread('game_over.jpg', cv2.IMREAD_GRAYSCALE)
-
-    curtosis = kurtosis(our_image, axis = None)
-    skewness = skew(our_image, axis = None)
-    variance = np.var(our_image)
-    entropy = skimage.measure.shannon_entropy(our_image)
+        our_image = cv2.imread(our_image, cv2.IMREAD_GRAYSCALE)
+    
+        curtosis = kurtosis(our_image, axis = None)
+        skewness = skew(our_image, axis = None)
+        variance = np.var(our_image)
+        entropy = skimage.measure.shannon_entropy(our_image)
    
     result=""
     if st.button("Predict"):
         result=predict_note_authentication(variance,skewness,curtosis,entropy)
-    st.success('The output is {}'.format(result))
-    if st.button("About"):
-        st.text("Lets LEarn")
-        st.text("Built with Streamlit")
-    
+        
+    if(result == 0):
+        str = "Beware!! The note is fake!!"
+    else:
+        str = "The note is authentic"
+        
+    st.success(f'{str}')
