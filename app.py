@@ -36,13 +36,12 @@ if __name__ == "__main__":
         skewness = skew(our_image, axis = None)
         variance = np.var(our_image)
         entropy = skimage.measure.shannon_entropy(our_image)
-   
+        
         if st.button("Predict"):
             result=predict_note_authentication(variance,skewness,curtosis,entropy)
-            
-        if(result == 0):
-            str = "Beware!! The note is fake!!"
-        else:
-            str = "The note is authentic"
+            if(result == 0):
+                str = "Beware!! The note is fake!!"
+            else:
+                str = "The note is authentic"
         
     st.success(f'{str}')
